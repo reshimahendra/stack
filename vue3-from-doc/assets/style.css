@@ -1,0 +1,44 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;800&family=Source+Sans+3:wght@200&display=swap'); */
+body{
+  background-color: #dedede;
+  padding: 0;
+  margin:0;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
+}
+button{
+  background-color: #dedede;
+  border: 1px solid #f0f0f0;
+  padding:1rem 3rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+button:hover{
+  background-color:#0e0e0e;
+  border: 1px solid #e0e0e0;
+  color: #ffffff;
+}
+input[type=text]{
+  padding: .7rem 1rem;
+
+}
+ul{
+  margin:0;
+  padding:0;
+}
+
+ul li{
+  list-style-type: none;
+  padding:0;
+  margin:0;
+}
+
+.box{
+  margin:2rem;
+  padding:2rem;
+  border: 1 solid #010101;
+  background-color: #ffffff;
+}
+.box .centered{
+  text-align: center;
+}

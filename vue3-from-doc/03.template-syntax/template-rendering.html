@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vue3 Template Syntax and Rendering</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="rendering" class="box centered">
+      <h2>VUE3 Template Syntax and Rendering</h2>
+      <h3>01. Interpolations</h3>
+      <span>Rendered text => : {{ interpolation }}</span><br/>
+      <h3>02. RAW HTML Render</h3>
+      <span v-html="rawHTML"></span><br/>
+      <h3>03. Attribute</h3>
+      <button type="button" v-bind:disabled="isDisabled" @click="btnClick('Test')">Button {{ isDisabled ? 'Disabled' : 'Enabled' }}</button> <br/>
+      <button type="button" @click="btnClick('Test')">Push Button</button> <br/>
+      <h3>04. JAVASCRIP Expression</h3>
+      <span>My num: {{ myNum }}. Now added with 1: <strong>{{ myNum + 1 }}</strong></span><br/>
+      <span>Value 'IsDisabled' is: {{ isDisabled }}. So above 'button' should be <strong>{{ isDisabled ? 'disabled' : 'normal' }}</strong></span><br />
+      <span>Reverse Interpolation text from template: {{ interpolation.split('').reverse().join('') }}</span><br />
+      <h3>05. Directive</h3>
+      <span v-if="seen">Now you see me</span><br />
+      <h3>06. Arguments</h3>
+      v-bind directive with argument 'href'. This bind link to <a v-bind:href="url">"{{ url }}"</a><br />
+      v-on directive which listen to DOM. <button v-on:click="changeDisable">Change Disable</button>
+      <h3>06. Dynamic Argument</h3>
+      <strong><i>Please REMEMBER to use 'LOWERCASE' in naming the argument</i><br></strong>
+      <span>On directive with dynamic argument, usage should be <b>v-on:[argName] or v-bind:[argname]</b> where 'argName' contain the argument want to be passed.</span><br />
+      <input type="text" v-on:[eventname]="changeDisable" >
+      <h3>07. Modifier</h3>
+      <span>{{ aMod }}</span>
+      <h3>08. Shorthand</h3>
+      <span>v-bin full syntax 'v-bin:href="url"'</span><br>
+      <a v-bind:href="url">{{url}}</a><br>
+      <span>shorthand syntax ':href="url"'</span><br>
+      <a :href="url">{{url}}</a><br>
+      <span>shorthand with dynamic arg syntax ':[argname]="url"'</span><br>
+      <a :[argname]="url">{{url}}</a><br>
+      <span>v-on full syntax 'v-on:click="myClick"'</span><br>
+      <button v-on:click="changeDisable">{{ isDisabled ? 'Disabled' : 'Enabled' }}</button><br>
+      <span>v-on shorthand syntax '@click="myClick"'</span><br>
+      <button @click="changeDisable">{{ isDisabled ? 'Disabled' : 'Enabled' }}</button><br>
+      <span>v-on dynamic arg syntax '@[eventname]="myClick"'</span><br>
+      <button @[eventtest]="changeDisable">{{ isDisabled ? 'Disabled' : 'Enabled' }}</button><br>
+
+
+    </div>
+
+    <script src="../assets/vue-global-min.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            interpolation: 'Interpolation Text',
+            rawHTML:`<i><b><span style="color:red;">Rendered using raw html</span></b></i>`,
+            isDisabled: true,
+            myNum: 4,
+            seen: true,
+            url: 'http://google.com',
+            eventname:"focus",
+            aMod:'<form v-on:submit.prevent="onSubmit">...</form>',
+            argname: 'href',
+            eventtest: 'click',
+
+          }
+        },
+        methods: {
+          btnClick(val){
+            console.log(val)
+          },
+          changeDisable() {
+            this.isDisabled = !this.isDisabled
+
+          }
+        } 
+      })
+
+      app.mount('#rendering')
+    </script>
+  
+  </body>
+</html>

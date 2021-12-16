@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="comp-app" class="box">
+      <nav-bar :navbar="nav" ></nav-bar>
+      <h2>Component  Instance</h2>
+      <p>Calling component Instance</p>
+      <search-input :search="search" ></search-input>
+    </div>
+
+    <script src="../assets/vue-global-min.js"></script>
+    <script>
+      
+      const app = Vue.createApp({
+        data() {
+          return {
+            search: 'search...',
+            nav: 'navbarku'
+          }
+        }
+      })
+
+      app.component('search-input', {
+        props: ['search'],
+        template: `<input type="text" v-bind:value="search" />`
+      })
+      app.component('nav-bar', {
+          props: ['navbar'],
+          template: `<div><ul>
+              <li>{{ navbar }}</li>
+              <li>test2</li>
+              <li>test3</li>
+              <li>test4</li>
+              <li>test5</li>
+              </ul></div>`
+        }
+      )
+      app.mount('#comp-app')
+    </script>
+  
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="vfor" class="box">
+      <h2>Perulangan v-for</h2> 
+      <ul>
+        <li v-for="list in lists" v-bind:key="list.id">{{ list.id }}. {{ list.name }}</li>
+      </ul>
+    </div>
+    <script src="../assets/vue-global-min.js"></script>
+    <script>
+      const VFor = {
+        data() {
+          return {
+            lists: [
+              {id: 1, name: 'Pepsodent'},
+              {id: 2, name: 'Colgate'},
+              {id: 3, name: 'Ciptadent'},
+              {id: 4, name: 'Close up'},
+              {id: 5, name: 'Maxim'},
+              {id: 6, name: 'Kodomo'},
+            ]
+          }
+        }
+      }
+      Vue.createApp(VFor).mount('#vfor')
+    </script>
+  </body> 
+</html>

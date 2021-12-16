@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="box" id="conditional">
+      <h2>Conditional with v-if</h2>
+      <p v-if="seen">{{ msg }}</p>
+      <button v-on:click="toggleVisibility">{{ btnText }}</button>
+    </div>
+    <script src="../assets/vue-global-min.js"></script>
+    <script>
+      const Conditional = {
+        data() {
+          return {
+            msg: 'Can you see me now',
+            btnText: 'Hide',
+            seen: true
+          }
+        },
+        methods: {
+            toggleVisibility() {
+              console.log(this.seen)
+              this.btnText = this.seen ? 'Show' : 'Hide'
+              this.seen = !this.seen
+            }
+        }
+      }
+
+      Vue.createApp(Conditional).mount('#conditional')
+    </script>
+  </body> 
+</html>

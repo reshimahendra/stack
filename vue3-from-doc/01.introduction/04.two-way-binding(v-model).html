@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="box" id="TwoWayBind">
+      <h2>Two Way Binding</h2>
+      <p>{{ msg }}</p>
+      <input type="text" v-model="msg">
+    </div>
+    <script src="../assets/vue-global-min.js"></script>
+    <script>
+      const TwoWayBind = {
+        data() {
+          return {
+            msg: 'Message Here'
+          }
+        }
+      }
+
+      Vue.createApp(TwoWayBind).mount('#TwoWayBind')
+    </script>
+  </body> 
+</html>

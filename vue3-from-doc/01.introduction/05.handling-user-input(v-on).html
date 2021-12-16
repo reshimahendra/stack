@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="box centered" id="event-handling">
+      <p>{{ msg }}</p>
+      <button v-on:click="reverseString()">Reverse String</button>
+    </div>
+
+    <script src="../assets/vue-global-min.js"></script>
+    <script>
+      // EVENT HANDLING 
+      const EventHandling = {
+        data() {
+          return {
+            msg: 'Lorem ipsum dolor sit amet, qui minim labore adipisicing minim'
+          }
+        }, 
+        methods: {
+            reverseString() {
+              this.msg = this.msg
+                .split('')
+                .reverse()
+                .join('')
+            }
+        }
+      }
+      Vue.createApp(EventHandling).mount('#event-handling')
+    </script>
+  </body> 
+</html>

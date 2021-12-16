@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Debauncing and Throttling</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="debouncing-trottling" class="box">
+      <h2>Debauncing and Throttling with Loadash</h2> 
+
+      <save-btn :is_hidden="checkHidden"></save-btn>
+    </div>
+  
+    <script src="../assets/vue3-prod.js"></script>
+    <script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            deb_data: 'Debouncing and Throttling',
+            checkHidden : false,
+          }
+        }
+      })
+
+      app.component('save-btn', {
+        props: ['is_hidden'],
+        created() {
+          // debouncing with Loadash 
+          this.debouncedClick = _.debounce(this.click, 50)
+          this.hiddenVal = this.is_hidden 
+        },
+        unmounted() {
+          // cancel the timer when component is removed
+          this.debouncedClick.cancel()
+        },
+        data() {
+          return { 
+            hiddenVal: false,
+          }
+        },
+        methods: {
+          click() {
+            this.hiddenVal = !this.hiddenVal
+            console.log(this.hiddenVal)
+          }
+        },
+              template: `<p v-if="hiddenVal">Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</p>    
+              <button type="button" @click="debouncedClick">{{ hiddenVal ?  'Hide' : 'Show' }}</button>`
+      })
+      app.mount('#debouncing-trottling')
+    </script>
+  </body>
+</html>

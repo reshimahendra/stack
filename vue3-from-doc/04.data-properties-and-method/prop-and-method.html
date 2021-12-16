@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Data Property and Method</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="data-prop" class="box">
+      <h2>Data Properties and Method</h2>
+      <p>{{ judul }} {{ num }}</p>
+      <button type="button" @click="increments">Increment</button>
+      <br><br>
+      <span :title="toTitleDate(adate)">{{ formatDate(adate) }}</span>
+    </div>
+    <script src='../assets/vue-global-min.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            judul: 'Data Props and Method',
+            jdl: 'Belum Ada Judul',
+            num: 29,
+            adate: new Date(),
+          }
+        },
+        methods: {
+          increments() {this.num++},
+          toTitleDate(adate) {
+            return adate.toLocaleString()
+          },
+          formatDate(adate) {
+            return adate.toLocaleString()
+          }
+        }
+      })
+      const vm = app.mount('#data-prop')
+
+      console.log("vm.$data.judul: ", vm.$data.judul)
+      console.log("vm.jdl: ",vm.jdl)
+      console.log("vm.num: ",vm.num)
+      console.log("vm.$data.num: ",vm.$data.num)
+      vm.num -=20
+      console.log("vm.num: ",vm.num)
+      vm.jdl = 'Sudah ada judulnya'
+      console.log("vm.$data.jdl: ",vm.jdl)
+
+    </script>
+  </body>
+</html>

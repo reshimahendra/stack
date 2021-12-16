@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="todo-list-app" class="box">
+      <h2>Composing with Component</h2> 
+      <ul>
+        <prod-list 
+          v-for="prod in lists" 
+          v-bind:key="prod.id" 
+          v-bind:prod="prod">
+        </prod-list>
+      </ul>
+    </div>
+    <script src="../assets/vue-global-min.js"></script>
+    <script>
+      const TodoList = {
+        data() {
+          return {
+            lists: [
+              {id: 1, product: 'Lifebuoy'},
+              {id: 2, product: 'Emeron'},
+              {id: 3, product: 'Ciptadent'},
+              {id: 4, product: 'Pepsodent'},
+              {id: 5, product: 'Citra'},
+              {id: 6, product: 'Brisk'},
+              {id: 7, product: 'Gatsby'},
+              {id: 8, product: 'Oral-B'},
+              {id: 9, product: 'Close Up'},
+            ]
+          }
+        }
+      }
+      const app = Vue.createApp(TodoList)
+      
+      app.component('prod-list', {
+        props: ['prod'],
+        template: `<li>{{ prod.id }}. {{ prod.product }}</li>`
+      }) 
+
+      app.mount('#todo-list-app')
+    </script>
+  </body> 
+</html>

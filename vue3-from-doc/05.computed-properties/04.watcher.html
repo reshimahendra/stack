@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Watcher | Computed Properties</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="watcher-example" class="box">
+      <h2>Watcher | Computed Properties</h2>
+      <p>While computed properties are more appropriate in most cases, there are times when a custom watcher is necessary. That's why Vue provides a more generic way to react to data changes through the watch option. This is most useful when you want to perform asynchronous or expensive operations in response to changing data.</p>
+      <br>
+      <p>Ask a 'Yes'/'No' question: 
+      <input type="text" v-model="question" />
+      </p>
+      <p>{{ answer }}</p> 
+    </div>
+
+    <!-- Since there is already a rich ecosystem of ajax libraries    -->
+    <!-- and collections of general-purpose utility methods, Vue core -->
+    <!-- is able to remain small by not reinventing them. This also   -->
+    <!-- gives you the freedom to use what you're familiar with.      -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() { 
+          return {
+            question: '',
+            answer: 'Question usualy contain a question mark,..',
+          } 
+        },
+        watch: {
+          // whenever question change, this func will run
+          question(newQuestion, oldQuestion) {
+            if (newQuestion.indexOf('?') > -1) {
+              this.getAnswer()
+            }
+          }
+        },
+        methods: {
+          async getAnswer() {
+            this.answer = 'Thinking...'
+            await axios
+              .get('https://yesno.wtf/api')
+              .then(res=>{
+                this.answer = res.data.answer
+              })
+              .catch(err=>{
+                this.answer = 'Error!! could not reach the API...'+ err
+              })
+          }
+        }
+      })
+
+      vm = app.mount('#watcher-example')
+    </script>
+  
+  </body>
+</html>

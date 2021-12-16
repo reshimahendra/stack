@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Computed Setter | Computed Properties</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="computed-prop" class="box">
+      <h2>Computed  Setter | Computed Properties</h2>
+      <p>Computed properties are by default getter-only, but you can also provide a setter when you need it</p>
+      <p>{{ fullname }}</p>
+    </div>
+
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() { 
+          return {
+            firstname: 'John',
+            lastname: 'Pettruci',
+          } 
+        },
+        computed: {
+          fullname: {
+            get() {
+              return this.firstname+' '+this.lastname
+            },
+
+            // setter
+            set(newVal) {
+              console.log('old name: '+ this.firstname+' '+this.lastname)
+              const name = newVal.split(' ')
+              this.firstname = name[0]
+              this.lastname = name[name.length - 1]
+              console.log('New name: '+ newVal)
+            }
+          }
+        }
+      })
+
+      vm = app.mount('#computed-prop')
+
+      // tried to change name menjadi Pak Ogah
+      vm.fullname = 'Pak Ogah'
+    </script>
+  
+  </body>
+</html>

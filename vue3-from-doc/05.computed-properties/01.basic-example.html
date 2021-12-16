@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Basic Example | Computed Propertiies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="computed-prop" class="box">
+      <h2>Basic Example | Computed Properties</h2>
+      <!-- due to minimalize logic top calculate in template that make bloats -->
+      <!-- it is best that logic in template moved to the 'computed' property -->
+      <!-- <p>Has published book: <span>{{ author.books.length > 0 ? 'Yes' : 'No' }}</span></p> -->
+      <p>Has published book: <span>{{ publishedBookMessage }}</span></p>
+      <ul>
+        <li v-for="(book, index) in author.books" >{{ index+1 }}. {{ book }}</li>
+      </ul>
+    </div>
+
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() { 
+          return {
+            author: {
+              name: 'John Pettruci',
+              books: [
+                'Vue 3 - Basic Guide',
+                'Vue 3 - Advance Guide',
+                'Vue 3 - Expert Guide',
+              ]
+            },
+          } 
+        },
+        computed: {
+          publishedBookMessage(){ return this.author.books.length > 0 ? 'Yes' : 'No' }
+        }
+      })
+
+      app.mount('#computed-prop')
+    </script>
+  
+  </body>
+</html>

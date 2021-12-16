@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Computed Caching vs Method | Computed Properties</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="computed-prop" class="box">
+      <h2>Computed Caching vs Method | Computed Properties</h2>
+      <!-- due to minimalize logic top calculate in template that make bloats -->
+      <!-- it is best that logic in template moved to the 'computed' property -->
+      <!-- <p>Has published book: <span>{{ author.books.length > 0 ? 'Yes' : 'No' }}</span></p> -->
+
+      <!-- instead using 'computed' property, it can also be done using 'method' -->
+      <!-- <p>Has published book: <span>{{ publishedBookMessage }}</span></p> -->
+
+      <p>Has published book: <span>{{ publishedBookMessage() }}</span></p>
+      <ul>
+        <li v-for="(book, index) in author.books" >{{ index+1 }}. {{ book }}</li>
+      </ul>
+      <br>
+      <p>Why do we need caching? Imagine we have an expensive computed property list, which requires looping through a huge array and doing a lot of computations. Then we may have other computed properties that in turn depend on list. Without caching, we would be executing list’s getter many more times than necessary! In cases where you do not want caching, use a method instead.
+#</p>
+    </div>
+
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() { 
+          return {
+            author: {
+              name: 'John Pettruci',
+              books: [
+                'Vue 3 - Basic Guide',
+                'Vue 3 - Advance Guide',
+                'Vue 3 - Expert Guide',
+              ]
+            },
+          } 
+        },
+        methods: {
+          publishedBookMessage(){ 
+            return this.author.books.length > 0 ? 'Yes' : 'No'
+          }
+        }
+      })
+
+      app.mount('#computed-prop')
+    </script>
+  
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Computed vs Watcher | Computed Properties</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="computed-watcher" class="box">
+      <h2>Computed vs Watcher | Computed Properties</h2>
+      <p>{{ fullname }}</p>
+    </div>
+
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() { 
+          return {
+            firstname: 'John',
+            lastname: 'Doe',
+            // fullname: 'John Doe'
+          } 
+        },
+        computed: {
+          fullname() {
+            return this.firstname +' '+ this.lastname
+          }
+        }
+        /* using watch is repetitive and not efficient in this case */
+        /* watch: {
+          firstname(val) {
+            this.fullname = val+' '+this.lastname
+          }
+          lastname(val) {
+            this.fullname = this.firstname +' '+ val
+          }
+        },*/
+      })
+
+      vm = app.mount('#computed-watcher')
+
+      // tried to change the name
+      vm.firstname = 'Fernando'
+      vm.lastname = 'Rosario'
+    </script>
+  
+  </body>
+</html>

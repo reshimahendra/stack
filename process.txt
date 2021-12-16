@@ -1,0 +1,1 @@
+computed properties > https://v3.vuejs.org/guide/computed.html

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Form Input Binding</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="form-input" class="box">
+      <h2>Form Input Binding</h2>
+      <p v-show='show'>use the v-model directive to create two-way data bindings on form input, textarea, and select elements. It automatically picks the correct way to update the element based on the input type.</p>
+
+      <button @click="showToggle">{{ show ? 'HIDE' : 'SHOW' }}</button>
+      <hr>
+      <input id="checkbox" type="checkbox" v-model="show">
+      <label for="checkbox"> Toggle Show/Hide</label>
+      <p v-show='show'>Message is: <span><i>{{ inpMsg }}</i></span></p>
+      <input v-show='show' type="text" v-model="inpMsg" placeholder="enter text here">
+      <br v-show='show'>
+      <p v-show='show'>Multiline Text</p>
+      <p v-show='show'><b>Message is:</b></p>
+      <p v-show='show' style="white-space: pre-line;">{{ iMulti }}</p>
+      <textarea v-show='show' cols="100" rows="10" v-model="iMulti"></textarea>
+      <br>
+      <div v-show="show">
+        <p>Multiple checkbox</p>
+        <input id="id1" type="checkbox" v-model="iMultiCheck" value="Jhon Doe">
+        <label for="id1">Jhon Doe</label><br>
+        <input id="id2" type="checkbox" v-model="iMultiCheck" value="Jannie Doe">
+        <label for="id2">Jannie Doe</label><br>
+        <input id="id3" type="checkbox" v-model="iMultiCheck" value="Michael Doe">
+        <label for="id3">Michael Doe</label><br>
+        <input id="id4" type="checkbox" v-model="iMultiCheck" value="Jhon Lennon">
+        <label for="id4">Jhon Lennon</label><br>
+        <input id="id5" type="checkbox" v-model="iMultiCheck" value="Joe Bidden">
+        <label for="id5">Joe Bidden</label><br>
+        <p>Selected value: {{ iMultiCheck }}</p>
+      </div>
+      <div v-show="show">
+        <p>Multiple Radio</p>
+        <input id=rad1" type="radio" v-model="picked" value="Jhon Doe">
+        <label for=rad1">Jhon Doe</label><br>
+        <input id=rad2" type="radio" v-model="picked" value="Jannie Doe">
+        <label for=rad2">Jannie Doe</label><br>
+        <input id=rad3" type="radio" v-model="picked" value="Michael Doe">
+        <label for=rad3">Michael Doe</label><br>
+        <input id=rad4" type="radio" v-model="picked" value="Jhon Lennon">
+        <label for=rad4">Jhon Lennon</label><br>
+        <input id=rad5" type="radio" v-model="picked" value="Joe Bidden">
+        <label for=rad5">Joe Bidden</label><br>
+        <p>Selected value: {{ picked }}</p>
+      </div>
+      <div v-show="show">
+        <h2>Select Option</h2>
+        <select id="sel-one" v-model="selected">
+          <option disabled value="">Please select one</option>
+          <option value="Sel A">Select A</option>
+          <option value="Sel B">Select B</option>
+          <option value="Sel C">Select C</option>
+        </select>
+        <p>Selected option: {{ selected }}</p>
+        <br>
+        <p>Multiple select. Plese use '[ctrl]+ click' to select multiple item</p>
+        <select id="sel-mul" v-model="multi_sel" multiple>
+          <option value="Sel A">Select A</option>
+          <option value="Sel B">Select B</option>
+          <option value="Sel C">Select C</option>
+        </select>
+        <p>Selected option: {{ multi_sel }}</p>
+        <br>
+        <p>Dynamic Select with v-for</p>
+        <select id="sel-dyn" v-model="selected" @change="selOpt">
+          <option value="" disabled>Please select your console:</option>
+          <option v-for="opt in options" :value="opt.value">{{ opt.text }}</option>
+        </select>
+      </div>
+      <p>Selected option: {{ selOpt() }}</p>
+    </div>
+  
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            show:true,
+            inpMsg: '',
+            iMulti: '',
+            iMultiCheck: ['Jannie Doe'], 
+            picked: 'Jhon Doe',
+            selected: '',
+            multi_sel: '', 
+            options: [
+              {text:'Play Station',value:'ps'},
+              {text:'XBox', value: 'xb'},
+              {text:'Konami', value: 'kn'},
+              {text:'Game Watch', value: 'gw'},
+              {text:'Sega Sport', value: 'ss'},
+              {text:'Nintendo', value: 'nt'},
+            ]
+          }
+        },
+        methods: {
+          showToggle(){
+            this.show = !this.show
+          },
+          selOpt() {
+            let val = this.options.find(opt => opt.value === this.selected)
+            if (val) {
+              return val.text
+            } else {
+              return ''
+            }
+          }
+
+        },
+        mounted() {
+          this.selected='xb'
+        }
+      })
+      
+      vm = app.mount('#form-input')
+      vm.show = false
+    </script>
+
+  </body>
+</html>

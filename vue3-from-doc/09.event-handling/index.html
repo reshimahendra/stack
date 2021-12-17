@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Event Handling</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="even-handling" class="box">
+      <h2>Event Handling</h2>
+      <button @click="showToggle">{{ show ? 'Hide' : 'Show' }}</button><br>
+      <p v-show="show">Event Handling sample <b>'SHOW: {{ show }}'</b></p>
+      <p v-show="show">Click the button to increase: {{ counter }} <input type="button" value="+" v-on:click="counter += 1"></p>
+      <hr>
+      <p v-show="show"><b>Event Handler</b></p>
+      <button v-show="show" @click="greet">Greet</button>
+      <p v-show="show">Inline handler and guess what it say? it say <b>'{{ saying }}'</b></p>
+      <button v-show="show" @click="say('Hello friend')">Hello</button>
+      <button v-show="show" @click="say('Whatsup friend')">Whatsup</button>
+      <br>
+      <p v-show="show">access the original DOM event in an inline statement handler. </p>
+      <p v-show="message !== '' && show" class="error">{{ message }}</p>
+      <button v-show="show" v-on:click="passOriginalDOM('Form cannot submitted yet', $event)">Pass to DOM</button>
+      <hr>
+      <p><b>Multiple event handl</b></p>
+      <p>Event1 saying: '{{ say1 }}', event2 saying: '{{ say2 }}'</p>
+      <button v-show="show" v-on:click="say('Hello John',1), say('where are you going?',2)">Double Event</button>
+      <br>
+      <p>    
+      .enter<br>
+      .tab<br>
+      .delete (captures both "Delete" and "Backspace" keys)<br>
+      .esc<br>
+      .space<br>
+      .up<br>
+      .down<br>
+      .left<br>
+      .right<br>
+      Click on below input and see the 'Key Event feature'
+      </p>
+      <input type="text" 
+        @keyup.enter="onKey($event)"
+        @keyup.tab ="onKey($event)"
+        @keyup.delete ="onKey($event)"
+        @keyup.esc="onKey($event)"
+        @keyup.space="onKey($event)"
+        @keyup.up="onKey($event)"
+        @keyup.down="onKey($event)"
+        @keyup.left="onKey($event)"
+        @keyup.right="onKey($event)"
+      />
+      <p>Event: {{ eName }}</p>
+
+    </div>
+  
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return { 
+            show: true,
+            counter: 1,
+            name: 'Blukutuk',
+            saying: 'Um...',
+            message: '',
+            say1: '',
+            say2: '',
+            eName: '',
+         }
+        }, 
+        methods: { 
+          showToggle() {
+            this.show = !this.show
+
+            // reset default falue
+            this.saying = "Um..."
+            this.message = ''
+            this.say1 = ''
+            this.say2 = ''
+          },
+          greet(event) {
+            alert('Hello from ' + this.name +'!')
+            if (event) {
+
+              alert(event.target.tagName)
+            }
+          },
+          say(val, code) {
+            let saying = (val === '' ? 'noting to say' : val)
+            if (code==1) {
+              this.say1 = saying
+            } else if (code==2) {
+              this.say2 = saying
+            } else {
+              this.saying = saying
+            }     
+          },
+          passOriginalDOM(message, event) { 
+            if (event) {
+              event.preventDefault()
+            }
+            this.message = message
+          },
+          onKey(event) {
+              if (event) {
+              this.eName = event.code
+            }
+          }
+        }
+      })
+      vw = app.mount('#even-handling')
+    </script>
+  </body>
+</html>

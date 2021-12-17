@@ -6,16 +6,23 @@ body{
   font-family: 'Open Sans', sans-serif;
   font-family: 'Source Sans 3', sans-serif;
 }
-button{
+button, input[type=button] {
   background-color: #dedede;
   border: 1px solid #f0f0f0;
-  padding:1rem 3rem;
-  margin-top: 1rem;
   cursor: pointer;
 }
-button:hover{
+button{
+  padding:1rem 3rem;
+  margin-top: 1rem;
+}
+input[type=button]{
+  padding: .2rem .5rem;
+  font-weight:bold;
+  border-radius: 20%;
+}
+button:hover, input[type=button]:hover{
   background-color:#0e0e0e;
-  border: 1px solid #e0e0e0;
+  /* border: 1px solid #e0e0e0; */
   color: #ffffff;
 }
 input[type=text]{

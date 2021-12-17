@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-for with component | list rendering</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="vfor-comp" class="box">
+      <h2>v-for with component | list rendering</h2>
+
+      <form v-on:submit.prevent="addTodo">
+        <label for="new-todo">Add Todo</label>
+        <input id="new-todo" type="" v-model="newTodoText" placeholder="Eg. feed the cat">
+        <input type="submit" value='+'>
+        
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Todo Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <todo-item 
+            v-for="(todo, index) of todos" 
+            :key="todo.id" 
+            :id="todo.id"
+            :title="todo.title" 
+            @remove="todos.splice(index, 1)">
+          </todo-item>
+        </tbody>
+      </table>
+      <hr>
+      <table-item :todos="todos"></table-item>
+    </div>
+
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const plitz = Vue.createApp({
+        data() {
+          return {
+            newTodoText: '',
+            todos: [
+              {id:1, title:'Do the dishes'},
+              {id:2, title:'Mob the floor'},
+              {id:3, title:'Go shopping'},
+            ], 
+            nextTodoIdx: 4,
+          }
+        },
+        methods: {
+          addTodo() {
+            this.todos.push({
+              id: this.nextTodoIdx++,
+              title: this.newTodoText
+            })
+            this.newTodoText = ''
+          }
+        }
+      })
+
+      // add component
+      plitz.component('todo-item', {
+        props: ['title','id'],
+        emits: ['remove'],
+        template: `
+          <tr>
+            <td>{{ id }} </td> 
+            <td>{{ title }} </td>
+            <td><input type="button" @click="$emit('remove')" value="-"/></td>
+          </tr>
+        `
+        })
+      plitz.component('table-item', {
+        props: ['todos'],
+        emits: ['remove'],
+        template: `
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Todo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="todo of todos" :key="todo.id">
+              <td>{{ todo.id }}</td>
+              <td>{{ todo.title }}</td>
+              <td><input type="button" @click="$emit('remove')" value="-"/></td>
+              </tr>
+            </tbody>
+          </table>
+        `
+      })
+
+      vm = plitz.mount('#vfor-comp')
+    </script>
+  
+  </body>
+</html>

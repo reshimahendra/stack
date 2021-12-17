@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-for with range | List Rendering</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="vfor-range" class="box">
+      <h2>v-for with range| List Rendering</h2>
+
+      <ul>
+        <li v-for="n of banyaknya" :key="n">{{ n }}</li>
+      </ul>
+
+    </div>
+  
+    <script src="../assets/vue3-prod.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            banyaknya: 20,
+          }
+        },
+        methods: {
+          oddItem(numbers) {
+            return numbers.filter(item => item.id % 2 === 0)
+          },
+        }
+      })
+
+      vm = app.mount('#vfor-range')
+    </script>
+  </body>
+</html>

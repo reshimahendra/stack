@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Mapping Array to Element with v-for | List Rendering</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="mapping-array" class="box">
+      <h2>Mapping Array to Element with v-for | List Rendering</h2>
+
+      <table>
+        <thead>
+          <th>ID</th>
+          <th>Nama</th>
+          <th>Harga</th>
+        </thead>
+        <tbody>
+          <tr v-for="item in items" :key="item.id">
+            <td>{{ item.id }}</td>
+            <td>{{ item.nama }}</td>
+            <td>${{ item.harga }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+
+      <ul class="blue-box">
+        <li :style="{marginBottom: '2rem'}">ODD list</li>
+        <li v-for="list in oddItem" :key="list.id">{{ list.id }}. {{ list.nama }}</li>
+      </ul><br>
+      <ul>
+        <li>Even list</li>
+        <li v-for="list in evenItem" :key="list.id">{{ list.id }}. {{ list.nama }}</li>
+      </ul>
+
+    </div>
+  
+    <script src="../assets/vue3-prod.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            items: [
+              {id:1, nama:'Kursi', harga: 100},
+              {id:2, nama:'Kaos', harga: 200},
+              {id:3, nama:'Tas', harga: 240},
+              {id:4, nama:'Meja', harga: 400},
+              {id:5, nama:'Laptop', harga: 1300},
+              {id:6, nama:'Hardisk', harga: 50},
+            ],
+            oddList: [],
+          }
+        },
+        computed: {
+          oddItem() {
+            return this.items.filter(item => item.id % 2 === 0)
+          },
+          evenItem() {
+            return this.items.filter(item => item.id % 2 !== 0)
+          }
+        }
+      })
+
+      vm = app.mount('#mapping-array')
+    </script>
+  </body>
+</html>

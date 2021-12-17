@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-for on template | list rendering</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="vfor-template" class="box">
+      <h2>v-for on template | list rendering</h2>
+      <p v-show="show">menggunakan v-for pada template</p>
+
+      <list-item :items="items" :show="show"></list-item>
+      <button @click="showToggle">{{ show ? 'Hide' : 'Show' }}</button>
+    </div>
+
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const plitz = Vue.createApp({
+        data() {
+          return {
+            show: true,
+            items: [
+              {id:1, nama:'Kursi', harga: 100},
+              {id:2, nama:'Kaos', harga: 200},
+              {id:3, nama:'Tas', harga: 240},
+              {id:4, nama:'Meja', harga: 400},
+              {id:5, nama:'Laptop', harga: 1300},
+              {id:6, nama:'Hardisk', harga: 50},
+            ],
+          }
+        },
+        methods: {
+          showToggle() {
+            this.show = !this.show
+          }
+        }
+      })
+
+      // add component
+      plitz.component('list-item', {
+        props: ['items', 'show'],
+        template: `
+          <table v-show="show">
+            <thead>
+              <th>ID</th>
+              <th>Nama</th>
+              <th style="text-align:right;">Harga</th>
+            </thead>
+            <tbody>
+              <tr v-for="item of items" :key="item.id">
+               <td>{{ item.id }}</td>
+               <td>{{ item.nama }}</td>
+               <td style="text-align:right;">{{ item.harga }}</td>
+              </tr>
+            </tbody>
+          </table>
+        `
+        })
+      
+      vm = plitz.mount('#vfor-template')
+    </script>
+  
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-for with object | List Rendering</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="mapping-array" class="box">
+      <h2>v-for with object| List Rendering</h2>
+
+      <table>
+        <thead>
+          <th>ID</th>
+          <th>Nama</th>
+          <th>Harga</th>
+        </thead>
+        <tbody>
+          <tr v-for="(item, key) of oddItem(items)" :key="key">
+            <td>{{ item.id }}</td>
+            <td>{{ item.nama }}</td>
+            <td>${{ item.harga }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+      <h2>Object Mapping</h2>
+      <ul>
+        <li v-for="(val, key, index) of bookObj" :key="key">{{ index+1 }} {{ key }}: {{ val }}</li>
+      </ul>
+      {{ th }}
+    </div>
+  
+    <script src="../assets/vue3-prod.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            items: [
+              {id:1, nama:'Kursi', harga: 100},
+              {id:2, nama:'Kaos', harga: 200},
+              {id:3, nama:'Tas', harga: 240},
+              {id:4, nama:'Meja', harga: 400},
+              {id:5, nama:'Laptop', harga: 1300},
+              {id:6, nama:'Hardisk', harga: 50},
+            ],
+            bookObj: {
+              title: 'Book1',
+              author: 'Julia Doe',
+              published: 'May 2002',
+            }
+          }
+        },
+        methods: {
+          oddItem(numbers) {
+            return numbers.filter(item => item.id % 2 === 0)
+          },
+        }
+      })
+
+      vm = app.mount('#mapping-array')
+    </script>
+  </body>
+</html>

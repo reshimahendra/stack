@@ -38,7 +38,32 @@ ul li{
   padding:2rem;
   border: 1 solid #010101;
   background-color: #ffffff;
+  padding-bottom: 3rem;
 }
-.box .centered{
+
+.blue-box{
+  padding: 1.5rem 2rem;
+  background-color: #330202;
+  border: 2px solid #dd0203;
+  color: #fafafa;
+}
+
+.centered{
   text-align: center;
+}
+
+.dark-font{
+  color: #000000;
+}
+
+.active{
+  border: 1 solid #04e2fe;
+  background-color: #eaeaea;
+  padding: .7rem 1rem;
+}
+
+.error{
+  border: 3px solid red;
+  background-color: #2341aa;
+  padding: .7rem 1rem;
 }

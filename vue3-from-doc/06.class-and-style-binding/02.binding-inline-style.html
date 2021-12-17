@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Binding Inline Style</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+    <body>
+      <div id="binding-html" class="box">
+        <h2>Binding Inline Style</h2>
+        <p>The object syntax for :style is pretty straightforward - it looks almost like CSS, except it's a JavaScript object. You can use either camelCase or kebab-case (use quotes with kebab-case) for the CSS property names</p><br>
+        <p :style="[{padding: allPadding + 'rem' }, {backgroundColor:activeColor}, {fontWeight:fontBold}]">Inline Style with ':style'</p>
+        <br>
+        <div :class="hasBlueBox" :style="{display: ['-webkit-box', '-ms-flexbox', 'flex'] }">Multiple Values</div>
+
+      </div>
+  
+      <script src='../assets/vue3-prod.js'></script>
+      <script>
+        const app = Vue.createApp({
+          data() {
+            return {
+              hasBlueBox: 'blue-box',
+              allPadding: 2,
+              activeColor: 'red',
+              fontBold: 'bold',
+            }
+          }, 
+        })
+
+        vm = app.mount('#binding-html')
+      </script>
+  </body>
+</html>

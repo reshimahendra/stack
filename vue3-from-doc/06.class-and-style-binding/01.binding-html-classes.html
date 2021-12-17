@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Binding HTML classess</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+    <body>
+      <div id="binding-html" class="box">
+        <h2>Binding HTML classess</h2>
+        <h4>Object Syntact</h4>
+        <p>pass an object to :class (short for v-bind:class)</p>
+        <span :class="{ active: isActive }">Style binding 'Active'</span>
+        <span :class="{ error: !isError }">Style binding 'Error'</span>
+        <p>rendered with 'Object' class binding</p><br>
+        <div :class="objectBind">
+          <p>Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</p>
+        </div>
+        <br>
+        <div :class="objComputed">
+          <p>Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</p>
+        </div>
+        <br>
+        <div :class="[hasBlueBox, textCentered]">Array binding class Syntax</div>
+        <br>
+        <h2>With Component</h2>
+        <class-comp :class="[hasBlueBox, {active: isActive}, darkFont]"></class-comp>
+
+      </div>
+  
+      <script src='../assets/vue3-prod.js'></script>
+      <script>
+        const app = Vue.createApp({
+          data() {
+            return {
+              isActive: true,
+              isError: false,
+              aComputed: {
+                'blue-box': true,
+                'centered': false,
+              },
+              objectBind: {
+                'blue-box': true,
+                'centered': true,
+              },
+              hasBlueBox: 'blue-box',
+              textCentered: 'centered',
+              darkFont: 'dark-font',
+            }
+          }, 
+          computed: {
+            objComputed() {
+              return {
+                'blue-box': this.aComputed['blue-box'] && this.isActive,
+                'centered' : this.aComputed['centered'] && !this.isError,
+              }
+            }
+          }
+        })
+
+        app.component('class-comp', {
+            template: `<div :class="$attrs.class"><p>Call this from component</p>
+              
+            </div>`
+        })
+
+        vm = app.mount('#binding-html')
+      </script>
+  </body>
+</html>

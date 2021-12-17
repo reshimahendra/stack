@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Conditional Rendering</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="conditional-rendering" class="box">
+      <h2>Conditional Rendering</h2>
+      <p v-if="show"><strong>v-if</strong>. This line is shown because 'show' is true</p>
+      <p v-if="show"><strong>v-if and v-else</strong>. This line is shown because 'show' is true</p>
+      <p v-else>Because 'show' is '{{ show }}', so this line is shown</p>
+      <br>
+      <p><strong>Conditional Group with</strong> <i>v-if</i> and <i>template</i></p>
+      <template v-if="show">
+        <div class="blue-box">
+          <h4>Many elements can be rendered here</h4>
+          <p>Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</p>
+        </div>
+      </template>
+      <template v-else="">
+        <p><b><i>Currently hidden because 'show' is {{ show }}</i></b></p>
+      </template>
+      <p v-if="num < 0">Number is smaller than 0. Number is '{{ num }}'</p>
+      <p v-else-if="num > 0">Number is larger than 0. Number is '{{ num }}'</p>
+      <p v-else="num == 0">Number is 0.</p>
+
+      <h2><b>v-show</b> or v-if?</h2>
+        <i>Show will visible if 'true', v-if visible if 'false'</i>
+      <p v-show="show">
+      <b>this from is v-show</b>
+      </p>
+      <p v-if="!show">
+      <b>this from is v-if</b>
+      </p>
+      
+
+      <button type="button" @click="toggleShow">Toggle Show</button>
+
+      <script src='../assets/vue3-prod.js'></script>
+      <script>
+        const pletz = Vue.createApp({
+          data() {
+            return {
+              show: false,
+              num: 10,
+            }
+          },
+          methods: {
+            toggleShow() {
+              this.show = !this.show
+            }
+          },
+        })
+
+        vm = pletz.mount('#conditional-rendering')
+      </script>
+    </div>
+  <body>
+</html>

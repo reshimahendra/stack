@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Listen To Child Component Event | Component Basic</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="comp-basic" class="box">
+      <h2>Listen To Child Component Event | Component Basic</h2>
+      <p v-show="show">Vue3 component basic</p>
+      <button @click="showToggle(),resetVal()">{{ show ? 'HIDE' : 'SHOW' }}</button>
+      <hr>
+      <!-- add custom evento to child component -->
+      <div :style="{fontSize: postFontSize + 'em'}">
+        <blog-post
+          @enlarge-text="postFontSize+= .1"
+          @smallen-text="postFontSize-= .1"
+          v-for="post of posts" 
+          :key="post.id" 
+          :title="post.title" 
+          :show="show"
+        ></blog-post>
+      </div>
+    </div>
+  
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            show: true,
+            msg:  '',
+            posts: [
+              {id:1, title:'Rambo'},
+              {id:2, title:'Avatar the Air Bender'},
+              {id:3, title:'Fast Furious 2'},
+              {id:4, title:'The Legend of Mummy'},
+              {id:5, title:'Superman 3'},
+              {id:6, title:'Spiderman Chronicles'},
+              {id:7, title:'The Hulk'},
+            ],
+            postFontSize: 1,
+          }
+        },
+        methods: { 
+          showToggle() {
+            this.show = !this.show
+          },
+          resetVal(){
+            this.msg = ''
+          }
+        }
+      })
+
+      // component
+      app.component('blog-post', {
+        props: ['show','title'],
+        emits: ['enlarge-text', 'smallen-text'],
+        data() {
+          return {
+            count:1,
+          }
+        },
+        template: `
+     <p v-show="show"><b>{{ title }}</b> <input type="button" value="+" @click="$emit('enlarge-text')" /><input type="button" value="-" @click="$emit('smallen-text')" /></p>
+        `
+      })
+
+      vm = app.mount('#comp-basic')
+    </script>
+  </body>
+</html>

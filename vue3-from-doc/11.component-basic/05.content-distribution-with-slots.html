@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Content Distribution with Slots | Component Basic</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="slots" class="box">
+      <h2>Content Distribution with Slots</h2>
+      <p v-show="show">Just like with HTML elements, it's often useful to be able to pass content to a component</p>
+      <button v-on:click="showToggle">{{ show ? 'HIDE' : 'SHOW' }}</button>
+      <hr>
+      <plit-slot v-show="show">Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</plit-slot>
+
+    </div>
+  
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const plitanz = Vue.createApp({
+        data() {
+          return {
+            show:true,
+          }
+        },
+        methods: {
+          showToggle() {
+            this.show = !this.show
+          }
+        }
+      })
+
+      // Component with slot 
+      plitanz.component('plit-slot', {
+        template: `
+        <div class="error">
+          <strong>ERROR!!!</strong>
+          <slot></slot>
+        </div>
+        `
+      })
+
+      vm = plitanz.mount('#slots')
+    </script>
+  </body>
+</html>

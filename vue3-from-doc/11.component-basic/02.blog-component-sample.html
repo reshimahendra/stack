@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Blog Component Sample | Component Basic</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="comp-basic" class="box">
+      <h2>Blog Component Sample | Component Basic</h2>
+      <p v-show="show">Vue3 component basic</p>
+      <button @click="showToggle(),resetVal()">{{ show ? 'HIDE' : 'SHOW' }}</button>
+      <hr>
+      <blog-post 
+        v-for="post of posts" 
+        :key="post.id" 
+        :title="post.title" 
+        :show="show"
+      ></blog-post>
+    </div>
+  
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            show: true,
+            msg:  '',
+            posts: [
+              {id:1, title:'Rambo'},
+              {id:2, title:'Avatar the Air Bender'},
+              {id:3, title:'Fast Furious 2'},
+              {id:4, title:'The Legend of Mummy'},
+              {id:5, title:'Superman 3'},
+              {id:6, title:'Spiderman Chronicles'},
+              {id:7, title:'The Hulk'},
+            ]
+          }
+        },
+        methods: { 
+          showToggle() {
+            this.show = !this.show
+          },
+          resetVal(){
+            this.msg = ''
+          }
+        }
+      })
+
+      // component
+      app.component('blog-post', {
+        props: ['show','title'],
+        data() {
+          return {
+            count:1,
+          }
+        },
+        template: `
+         <p v-show="show"><b>{{ title }}</b></p>
+        `
+      })
+
+      vm = app.mount('#comp-basic')
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Component Basic</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="comp-basic" class="box">
+      <h2>Component Basic</h2>
+      <p v-show="show">Vue3 component basic</p>
+      <button @click="showToggle(),resetVal()">{{ show ? 'HIDE' : 'SHOW' }}</button>
+      <hr>
+      <button-count v-show='show'></button-count>
+      <button-count :show='show'></button-count>
+      <button-count :show='show'></button-count>
+      <button-count :show='show'></button-count>
+      <button-count :show='show'></button-count>
+    </div>
+  
+    <script src='../assets/vue3-prod.js'></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            show: true,
+            msg:  ''
+          }
+        },
+        methods: { 
+          showToggle() {
+            this.show = !this.show
+          },
+          resetVal(){
+            this.msg = ''
+
+          }
+        }
+      })
+
+      // component
+      app.component('button-count', {
+        props: ['show'],
+        data() {
+          return {
+            count:1,
+          }
+        },
+        template: `
+         <button v-show='show' v-on:click="count++">Click count: {{ count }}</button>
+        `
+      })
+
+      vm = app.mount('#comp-basic')
+    </script>
+  </body>
+</html>

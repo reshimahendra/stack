@@ -1,0 +1,88 @@
+{
+    "best-products": [
+        {
+            "id":1,
+            "sku": "K-01",
+            "nama": "Sate Ayam",
+            "harga": 10000,
+            "is_ready": true,
+            "gambar": "sate-ayam.jpg"
+        },
+        {
+            "id":3,
+            "sku": "K-03",
+            "nama": "Ayam Panggang",
+            "harga": 15000,
+            "is_ready": true,
+            "gambar": "ayam-panggang.jpg"
+        },
+        {
+            "id":5,
+            "sku": "K-05",
+            "nama": "Soto Ayam",
+            "harga": 10000,
+            "is_ready": true,
+            "gambar": "soto-ayam.jpg"
+        },
+        {
+            "id":6,
+            "sku": "K-06",
+            "nama": "Soto Babi",
+            "harga": 15000,
+            "is_ready": true,
+            "gambar": "soto.jpg"
+        }
+    ],
+    "products": [
+        {
+            "id":1,
+            "sku": "K-01",
+            "nama": "Sate Ayam",
+            "harga": 10000,
+            "is_ready": true,
+            "gambar": "sate-ayam.jpg"
+        },
+        {
+            "id":2,
+            "sku": "K-02",
+            "nama": "Sate Ikan",
+            "harga": 13000,
+            "is_ready": true,
+            "gambar": "sate-ikan.jpg"
+        },
+        {
+            "id":3,
+            "sku": "K-03",
+            "nama": "Ayam Panggang",
+            "harga": 15000,
+            "is_ready": true,
+            "gambar": "ayam-panggang.jpg"
+        },
+        {
+            "id":4,
+            "sku": "K-04",
+            "nama": "Sate Babi",
+            "harga": 20000,
+            "is_ready": true,
+            "gambar": "sate-babi.jpg"
+        },
+        {
+            "id":5,
+            "sku": "K-05",
+            "nama": "Soto Ayam",
+            "harga": 10000,
+            "is_ready": true,
+            "gambar": "soto-ayam.jpg"
+        },
+        {
+            "id":6,
+            "sku": "K-06",
+            "nama": "Soto Babi",
+            "harga": 15000,
+            "is_ready": true,
+            "gambar": "soto-babi.jpg"
+        }
+    ],
+    "keranjang": [],
+    "pesanan":[]
+}

@@ -33,6 +33,8 @@ type ProductRepo interface {
     Last() (Product, error)
     FindByID(id int) (Product, error)
     All() ([]Product, error)
+    Limit(max int) ([]Product, error)
+    Offset(offset int) ([]Product, error)
 }
 
 
@@ -215,5 +217,19 @@ func (r *productRepo) FindByID(id int) (Product, error) {
 func (r *productRepo) All() ([]Product, error) {
     var ps []Product
     err := r.db.Where("deleted_at IS NULL").Find(&ps).Error
+    return ps, err
+}
+
+// Get Limit 'product'
+func (r *productRepo) Limit(max int) ([]Product, error) {
+    var ps []Product
+    err := r.db.Where("deleted_at IS NULL").Limit(max).Find(&ps).Error
+    return ps, err
+}
+
+// Get offset 'product'
+func (r *productRepo) Offset(offset int) ([]Product, error) {
+    var ps []Product
+    err := r.db.Where("deleted_at IS NULL").Offset(offset).Find(&ps).Error
     return ps, err
 }

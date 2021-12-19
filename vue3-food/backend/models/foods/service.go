@@ -131,6 +131,8 @@ type ProductService interface {
     Last() (Product, error)
     FindByID(id int) (Product, error)
     All() ([]Product, error)
+    Limit(max int) ([]Product, error)
+    Offset(offset int) ([]Product, error)
 }
 
 type productService struct {
@@ -187,4 +189,12 @@ func (s *productService) FindByID(id int) (Product, error) {
 
 func (s *productService) All() ([]Product, error) {
     return s.repo.All()
+}
+
+func (s *productService) Limit(max int) ([]Product, error) {
+    return s.repo.Limit(max)
+}
+
+func (s *productService) Offset(offset int) ([]Product, error) {
+    return s.repo.Offset(offset)
 }

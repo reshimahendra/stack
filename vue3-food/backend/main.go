@@ -67,9 +67,11 @@ func main()  {
     prodCategory.GET("/last", prodCatHandler.LastProductCategoryHandler)
     prodCategory.GET("/:id", prodCatHandler.FindByIDProductCategoryHandler)
 
-    // GROUP for PRODUCT CATEGORY 
+    // GROUP for PRODUCT
     prod := v1.Group("/product")
     prod.GET("/", prodHandler.ShowProductHandler)
+    prod.GET("/limit/:limit", prodHandler.LimitProductHandler)
+    prod.GET("/offset/:offset", prodHandler.OffsetProductHandler)
     prod.POST("/create", prodHandler.CreateProductHandler)
     prod.PUT("/:id/update", prodHandler.UpdateProductHandler)
     prod.GET("/first", prodHandler.FirstProductHandler)

@@ -638,3 +638,51 @@ func (h *productHandler) ShowProductHandler(c *gin.Context) {
         "data": allPS,
     })
 }
+
+// Show all data 
+func (h *productHandler) LimitProductHandler(c *gin.Context) {
+    var allPS []ProductResponse
+
+    // Get all product data 
+    maxRec, _ := strconv.Atoi(c.Param("limit"))
+    allProd, err := h.productService.Limit(maxRec)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{
+            "error": "Something wrong while trying to get the data!",
+        })
+        return
+    }
+
+    // Iterate all data to our array of 'product type response' struct before sending to client
+    for _, Prod := range allProd {
+        allPS = append(allPS, productToResponse(Prod))
+    }
+
+    c.JSON(http.StatusOK, gin.H{
+        "data": allPS,
+    })
+}
+
+// Show all data 
+func (h *productHandler) OffsetProductHandler(c *gin.Context) {
+    var allPS []ProductResponse
+
+    // Get all product Data 
+    offset, _ := strconv.Atoi(c.Param("offset"))
+    allProd, err := h.productService.Offset(offset)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{
+            "error": "Something wrong while trying to get the data!",
+        })
+        return
+    }
+
+    // Iterate all data to our array of 'product type response' struct before sending to client
+    for _, Prod := range allProd {
+        allPS = append(allPS, productToResponse(Prod))
+    }
+
+    c.JSON(http.StatusOK, gin.H{
+        "data": allPS,
+    })
+}

@@ -43,10 +43,10 @@ export default {
     methods: {
         async loadData() {
             await axios
-                .get('/best-products?_limit=3')
+                .get('/v1/product/limit/3')
                 .then( res => {
                     // console.log(res, 'success')
-                    this.products = res.data
+                    this.products = res.data.data
                 })
                 .catch(err => {
                     console.log(err, 'error')

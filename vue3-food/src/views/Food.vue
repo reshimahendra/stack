@@ -44,10 +44,10 @@ export default {
     methods: {
         async loadProducts() {
             await axios
-                .get('/products/')
+                .get('/v1/product/')
                 .then(res=>{
-                    console.log(res)
-                    this.products = res.data
+                    console.log(res.data.data)
+                    this.products = res.data.data
                 })
                 .catch(err=>{
                     console.log(err, 'Error')

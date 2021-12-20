@@ -478,7 +478,7 @@ func (h *productHandler) CreateProductHandler(c *gin.Context) {
 
 // update handle
 func (h *productHandler) UpdateProductHandler(c *gin.Context) {
-   var prodReq ProductRequest
+   var prodReq ProductReqUpdate
 
    // Check if required record available
    prodID, err := strconv.Atoi(c.Param("id"))
@@ -639,7 +639,7 @@ func (h *productHandler) ShowProductHandler(c *gin.Context) {
     })
 }
 
-// Show all data 
+// Show limited list data 
 func (h *productHandler) LimitProductHandler(c *gin.Context) {
     var allPS []ProductResponse
 
@@ -663,7 +663,7 @@ func (h *productHandler) LimitProductHandler(c *gin.Context) {
     })
 }
 
-// Show all data 
+// Show offseted data 
 func (h *productHandler) OffsetProductHandler(c *gin.Context) {
     var allPS []ProductResponse
 
@@ -684,5 +684,28 @@ func (h *productHandler) OffsetProductHandler(c *gin.Context) {
 
     c.JSON(http.StatusOK, gin.H{
         "data": allPS,
+    })
+}
+
+// Find Name 
+func (h *productHandler) FindNameProductHandler(c *gin.Context) {
+    var fp []ProductResponse
+
+    // Looking for data with 'LIKE' clausal on 'name' field 
+    filterProd, err := h.productService.FindName(c.Param("name"))
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{
+            "error": "Something wrong while looking up the data!",
+        })
+        return
+    }
+
+    for _, p := range filterProd {
+        fp = append(fp, productToResponse(p))
+    }
+
+    // Show data to client 
+    c.JSON(http.StatusOK, gin.H{
+        "data": fp,
     })
 }

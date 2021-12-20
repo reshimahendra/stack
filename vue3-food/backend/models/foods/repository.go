@@ -35,6 +35,7 @@ type ProductRepo interface {
     All() ([]Product, error)
     Limit(max int) ([]Product, error)
     Offset(offset int) ([]Product, error)
+    FindName(name string) ([]Product, error)
 }
 
 
@@ -232,4 +233,11 @@ func (r *productRepo) Offset(offset int) ([]Product, error) {
     var ps []Product
     err := r.db.Where("deleted_at IS NULL").Offset(offset).Find(&ps).Error
     return ps, err
+}
+
+// 'product' Find Name 
+func (r *productRepo) FindName(name string) ([]Product, error) {
+    var p []Product
+    err := r.db.Where("deleted_at IS NULL AND name like ?", "%"+name+"%").Find(&p).Error
+    return p, err
 }

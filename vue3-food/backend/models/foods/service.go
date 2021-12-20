@@ -125,7 +125,7 @@ func (s *productCategoryService) All() ([]ProductCategory, error) {
 */
 type ProductService interface {
     Create(pr ProductRequest) (Product, error)
-    Update(id int, pr ProductRequest) (Product, error)
+    Update(id int, pr ProductReqUpdate) (Product, error)
     Delete(id int) error
     First() (Product, error)
     Last() (Product, error)
@@ -133,6 +133,7 @@ type ProductService interface {
     All() ([]Product, error)
     Limit(max int) ([]Product, error)
     Offset(offset int) ([]Product, error)
+    FindName(name string) ([]Product, error)
 }
 
 type productService struct {
@@ -157,7 +158,7 @@ func (s *productService) Create(pr ProductRequest) (Product, error) {
     return s.repo.Create(p)
 }
 
-func (s *productService) Update(id int, pr ProductRequest) (Product, error) {
+func (s *productService) Update(id int, pr ProductReqUpdate) (Product, error) {
     p := Product{
         Sku: pr.Sku,
         Name: pr.Name,
@@ -197,4 +198,8 @@ func (s *productService) Limit(max int) ([]Product, error) {
 
 func (s *productService) Offset(offset int) ([]Product, error) {
     return s.repo.Offset(offset)
+}
+
+func (s *productService) FindName(name string) ([]Product, error) {
+    return s.repo.FindName(name)
 }

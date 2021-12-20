@@ -45,8 +45,8 @@ export default {
             await axios
                 .get('/v1/product/limit/3')
                 .then( res => {
-                    // console.log(res, 'success')
-                    this.products = res.data.data
+                    /* console.log(res.data, 'success') */
+                    this.products = res.data.data ? res.data.data : []
                 })
                 .catch(err => {
                     console.log(err, 'error')

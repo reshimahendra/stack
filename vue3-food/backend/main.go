@@ -70,6 +70,7 @@ func main()  {
     // GROUP for PRODUCT
     prod := v1.Group("/product")
     prod.GET("/", prodHandler.ShowProductHandler)
+    prod.GET("/name=:name", prodHandler.FindNameProductHandler)
     prod.GET("/limit/:limit", prodHandler.LimitProductHandler)
     prod.GET("/offset/:offset", prodHandler.OffsetProductHandler)
     prod.POST("/create", prodHandler.CreateProductHandler)

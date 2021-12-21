@@ -6,7 +6,7 @@
                 <li><router-link :to="{name:'Food'}">Food</router-link></li>
             </ul>
         </nav>
-        <div class="tile is-ancestor mt-3">
+        <div class="tile is-ancestor mt-3 mb-5">
             <div class="tile is-child">
                 <figure class="image is-4by3">
                     <img :src="product.picture" class="box-image">
@@ -32,12 +32,12 @@
                     <form @submit.prevent="submitOrder" class="mt-3">
                         <div class="field">
                             <div class="control">
-                                <input class="input" type="number" v-model="order" min="1" max="20">
+                                <input class="input" type="number" v-model="order.quantity" min="1" max="20">
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <textarea class="textarea" v-model="orderMessage" placeholder="Additional note for your order" rows="2"></textarea>
+                                <textarea class="textarea" v-model="order.note" placeholder="Additional note for your order" rows="2"></textarea>
                             </div>
                         </div>
 
@@ -53,7 +53,7 @@
 
 <script>
     import axios from 'axios'
-    // import CardDetail from '@/components/CardDetail'
+    import { toast }from 'bulma-toast'
 
     export default {
         name: 'FoodDetail',
@@ -74,9 +74,9 @@
                 product : {},
                 order: {
                     quantity    : 1,
-                    orderNote   : '',
-                    product     : []
+                    note   : '',
                 },
+
             }
         },
         mounted() {
@@ -105,7 +105,15 @@
                     })
             },
             submitOrder() {
-                console.log('Order submited.' + this.order+ '\n'+ this.orderMessage)
+                this.order.product = this.product
+                console.log('Order submited.\n(' + this.order.quantity+ ')'+ this.product.name+ '\n'+ this.order.note)
+                toast({
+                    message: `'${this.product.name}' has been added.`,
+                    type: 'is-success',
+                    dismissible: true,
+                    duration: 2000,
+                    position: 'bottom-right',
+                })
             },
             format(n, currency) {
                 return new Intl.NumberFormat('id', {

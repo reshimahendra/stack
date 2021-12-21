@@ -20,7 +20,7 @@
         </div>
 
         <div class="navbar-end">
-          <router-link class="navbar-item " :to="{name: 'About'}">Cart&nbsp; <span class="tag is-primary">0</span>&nbsp;</router-link>
+          <router-link class="navbar-item " :to="{name: 'About'}">Cart&nbsp; <span class="tag is-primary">{{ orderCount.length }}</span>&nbsp;</router-link>
           <div class="navbar-item">
             <div class="buttons">
               <a class="button is-primary">
@@ -37,14 +37,27 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'Navbar',
     data() {
         return {
             activator: false,
+            orderCount: [],
         }
     },
     methods: {
+        async checkOrder() {
+            await axios
+                .get(`/v1/cart/`)
+                .then(() => {
+                    console.log('Cek pesanan')
+                })
+                .catch(()=>{
+                    console.log('Ada error')
+                })
+        },
         makeBurger () {
             this.activator = !this.activator
             return this.activator

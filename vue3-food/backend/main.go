@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"lbw-resto/middleware"
+	"lbw-resto/models/cart"
 	"lbw-resto/models/foods"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +21,10 @@ func main()  {
         &foods.ProductType{},
         &foods.ProductCategory{},
         &foods.Product{},
+        &cart.Cart{},
+        &cart.OrderList{},
     )
+
 
     // product Type
     prodTypeRepo    := foods.NewProductTypeRepo(db)
@@ -36,6 +40,11 @@ func main()  {
     prodRepo    := foods.NewProductRepo(db)
     prodService := foods.NewProductService(prodRepo)
     prodHandler := foods.NewProductHandler(prodService)
+
+    // Cart and Order
+    cartRepo    := cart.NewCartRepo(db)
+    cartService := cart.NewCartService(cartRepo)
+    carthandler := cart.NewCartHandler(cartService)
 
     // gin.SetMode(gin.ReleaseMode)
     r := gin.New()
@@ -78,6 +87,10 @@ func main()  {
     prod.GET("/first", prodHandler.FirstProductHandler)
     prod.GET("/last", prodHandler.LastProductHandler)
     prod.GET("/:id", prodHandler.FindByIDProductHandler)
+
+    // GROUP for CART handler 
+    cart := v1.Group("/cart")
+    cart.POST("/create", carthandler.CreateCartHandler)
 
     fmt.Println("Starting server at port '8000'") 
     r.Run(":8000")

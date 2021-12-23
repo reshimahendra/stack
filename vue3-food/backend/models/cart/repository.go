@@ -10,12 +10,12 @@ type CartRepo interface {
     All() ([]Cart, error)
 }
 
-type OrderListRepo interface {
-    Create (od OrderList) (OrderList, error)
-    Update (id int, c OrderList) (OrderList, error)
+type CartItemRepo interface {
+    Create (od CartItem) (CartItem, error)
+    Update (id int, c CartItem) (CartItem, error)
     Delete (id int) error
-    FindByID (id int) (OrderList, error)
-    All() ([]OrderList, error)
+    FindByID (id int) (CartItem, error)
+    All() ([]CartItem, error)
 }
 
 
@@ -34,19 +34,19 @@ func (cr *cartRepo) Create(c Cart) (Cart, error) {
 }
 
 func (cr *cartRepo) Update(id int, c Cart) (Cart, error) {
-    err := cr.db.Where("created_at IS NULL and id=?", id).Updates(&c).Error
+    err := cr.db.Where("id=?", id).Updates(&c).Error
     return c, err
 }
 
 func (cr *cartRepo) Delete(id int) error {
     var c Cart
-    err := cr.db.Where("created_at IS NULL and id=?", id).Delete(&c).Error
+    err := cr.db.Where("id=?", id).Delete(&c).Error
     return err
 }
 
 func (cr *cartRepo) FindByID(id int) (Cart, error) {
     var c Cart
-    err := cr.db.Where("created_at IS NULL AND id=?", id).First(&c).Error
+    err := cr.db.Where("id=?", id).First(&c).Error
     return c, err
 }
 
@@ -59,39 +59,39 @@ func (cr *cartRepo) All() ([]Cart, error) {
 
 
 // Order list repo 
-type orderListRepo struct {
+type cartItemRepo struct {
     db *gorm.DB
 }
 
-func NewOrderListRepo(db *gorm.DB) *orderListRepo{
-    return &orderListRepo{db}
+func NewCartItemRepo(db *gorm.DB) *cartItemRepo{
+    return &cartItemRepo{db}
 }
 
-func (olr *orderListRepo) Create(ol OrderList) (OrderList, error) {
-    err := olr.db.Create(&ol).Error
+func (cir *cartItemRepo) Create(ol CartItem) (CartItem, error) {
+    err := cir.db.Create(&ol).Error
     return ol, err
 }
 
-func (olr *orderListRepo) Update(id int, ol OrderList) (OrderList, error) {
-    err := olr.db.Where("created_at IS NULL and id=?", id).Updates(&ol).Error
+func (cir *cartItemRepo) Update(id int, ol CartItem) (CartItem, error) {
+    err := cir.db.Where("id=?", id).Updates(&ol).Error
     return ol, err
 }
 
-func (olr *orderListRepo) Delete(id int) error {
-    var ol OrderList
-    err := olr.db.Where("created_at IS NULL and id=?", id).Delete(&ol).Error
+func (cir *cartItemRepo) Delete(id int) error {
+    var ol CartItem
+    err := cir.db.Where("id=?", id).Delete(&ol).Error
     return err
 }
 
-func (olr *orderListRepo) FindByID(id int) (OrderList, error) {
-    var ol OrderList
-    err := olr.db.Where("created_at IS NULL AND id=?", id).First(&ol).Error
+func (cir *cartItemRepo) FindByID(id int) (CartItem, error) {
+    var ol CartItem
+    err := cir.db.Where("id=?", id).First(&ol).Error
     return ol, err
 }
 
-func (olr *orderListRepo) All() ([]OrderList, error) {
-    var ol []OrderList
+func (cir *cartItemRepo) All() ([]CartItem, error) {
+    var ol []CartItem
 
-    err := olr.db.Find(&ol).Error
+    err := cir.db.Find(&ol).Error
     return ol, err
 }

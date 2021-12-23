@@ -8,12 +8,12 @@ type CartService interface {
     All() ([]Cart, error)
 }
 
-type OrderListService interface {
-    Create (od OrderList) (OrderList, error)
-    Update (id int, c OrderList) (OrderList, error)
+type CartItemService interface {
+    Create (od CartItem) (CartItem, error)
+    Update (id int, c CartItem) (CartItem, error)
     Delete (id int) error
-    FindByID (id int) (OrderList, error)
-    All() ([]OrderList, error)
+    FindByID (id int) (CartItem, error)
+    All() ([]CartItem, error)
 }
 
 // Cart Service 
@@ -46,26 +46,26 @@ func (cs *cartService) All() ([]Cart, error) {
 }
 
 // Order List Service
-type orderListService struct {
-    repo OrderListRepo
+type cartItemService struct {
+    repo CartItemRepo
 }
 
-func NewOrderListService(repo OrderListRepo) *orderListService {
-    return &orderListService{repo}
+func NewCartItemService(repo CartItemRepo) *cartItemService {
+    return &cartItemService{repo}
 }
 
-func (ols *orderListService) Create(ol OrderList) (OrderList, error) {
-    return ols.repo.Create(ol)
+func (cis *cartItemService) Create(ol CartItem) (CartItem, error) {
+    return cis.repo.Create(ol)
 }
 
-func (ols *orderListService) Update(id int, ol OrderList) (OrderList, error) {
-    return ols.repo.Update(id, ol)
+func (cis *cartItemService) Update(id int, ol CartItem) (CartItem, error) {
+    return cis.repo.Update(id, ol)
 }
 
-func (ols *orderListService) FindByID(id int) (OrderList, error) {
-    return ols.repo.FindByID(id)
+func (cis *cartItemService) FindByID(id int) (CartItem, error) {
+    return cis.repo.FindByID(id)
 }
 
-func (ols *orderListService) All() ([]OrderList, error) {
-    return ols.repo.All()
+func (cis *cartItemService) All() ([]CartItem, error) {
+    return cis.repo.All()
 }

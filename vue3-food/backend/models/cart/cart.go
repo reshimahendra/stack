@@ -1,24 +1,18 @@
 package cart
 
-import (
-	"lbw-resto/models/foods"
-
-	"gorm.io/gorm"
-)
+import "lbw-resto/models/foods"
 
 type Cart struct {
-    gorm.Model
-    ID          int             `json:"id"`
+    ID          uint            `json:"id" gorm:"primaryKey;autoInc"`
     TableNo     uint            `json:"table_no" binding:"required"`
-    OrderList   []OrderList     `json:"order_list" gorm:"foreignKey:CartId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+    CartID      uint            `json:"cart_id"`
+    CartItems   []CartItem      `json:"cart_items" gorm:"foreignKey:CartId;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
-type OrderList struct {
-    gorm.Model
-    Cart        Cart
-    CartId     uint            `json:"cart_id" gorm:"not null"`
-
-    Quantity    int             `json:"quantity,default=1" binding:"required"`
+type CartItem struct {
+    CartId      uint            `json:"cart_id" gorm:"not null"`
+    Quantity    uint            `json:"quantity,default=1" binding:"required, number"`
     Note        string          `json:"note"`
-    Product     foods.Product   `json:"products" gorm:"constraint:OnUpdate:CASCADE,OnDelet:SET NULL;"` 
+    ProductID   uint            `json:"product_id"`
+    Product     foods.Product   `json:"products" gorm:"foreignKey:ProductID;constraint:OnUpdate:CASCADE,OnDelet:SET NULL;"` 
 }

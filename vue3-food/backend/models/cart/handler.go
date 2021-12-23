@@ -1,7 +1,6 @@
 package cart
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +19,6 @@ func (ch *cartHandler) CreateCartHandler(c *gin.Context) {
     var cart Cart
 
     err := c.ShouldBindJSON(&cart).Error
-    log.Println(err)
     if err != nil {
         // c.JSON(http.StatusBadRequest, gin.H{
         //     "error": "Something wrong while retreiving data.",

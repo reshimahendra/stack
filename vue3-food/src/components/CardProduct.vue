@@ -8,14 +8,14 @@
         </div>
         <div class="content mt-3">
             <h2 class="subtitle is-5">{{ product.name }}</h2>
-            <router-link class="button is-primary" :to="{name:'FoodDetail', params:{id:product.id}}">Add to Cart</router-link>
+            <router-link class="button is-primary" :to="{name:'FoodDetail', params:{id:id}}">Add to Cart</router-link>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['product'],
+    props: ['product','id'],
     name: 'CardProduct',
     methods: {
         format(n, currency) {

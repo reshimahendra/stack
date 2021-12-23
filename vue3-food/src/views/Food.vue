@@ -22,7 +22,7 @@
             </div>
             <div class="columns is-multiline">
                 <div class="column is-one-third" v-for="product of products" :key="product.id">
-                    <CardProduct :product="product"></CardProduct>
+                    <CardProduct :id="product.id" :product="product.prod"></CardProduct>
                 </div>
             </div>
         </div>

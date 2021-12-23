@@ -13,7 +13,7 @@
         </div>
         <div class="columns">
             <div class="column" v-for="product of products" :key="product.id">
-                <CardProduct :product="product"></CardProduct>
+                <CardProduct :id="product.id" :product="product.prod"></CardProduct>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@ export default {
             await axios
                 .get('/v1/product/limit/3')
                 .then( res => {
-                    /* console.log(res.data, 'success') */
+                    // console.log(res.data.data, 'success')
                     this.products = res.data.data ? res.data.data : []
                 })
                 .catch(err => {

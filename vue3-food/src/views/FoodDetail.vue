@@ -14,7 +14,7 @@
             </div>
             <div class="tile is-child">
                 <div class="box-detail">
-                    <h2 class="subtitle has-text-small mb-3 is-uppercase"><b>{{ product.name }}</b></h2>
+                    <h2 class="subtitle has-text-small mb-3 is-uppercase"><b>{{ product.prod.name }}</b></h2>
                     <div class="columns is-mobile pl-3 mb-0">
                         <div class="column is-one-third">
                             <ul>
@@ -24,7 +24,7 @@
                         </div>
                         <div class="column">
                             <ul>
-                                <li>{{ format(product.price, 'idr') }}</li>
+                                <li>{{ format(product.prod.price, 'idr') }}</li>
                                 <li>{{ product.type }}</li>
                             </ul>
                         </div>
@@ -64,14 +64,19 @@
             return {
                 productDefault: {
                     id: 0,
-                    sku: '',
-                    name: '',
-                    price: 0,
-                    is_ready: false,
-                    is_available: false,
-                    picture: require('@/assets/img/default.jpg'),
+                    prod: {
+                        sku: '',
+                        name: '',
+                        price: 0,
+                        is_ready: false,
+                        is_available: false,
+                        picture: require('@/assets/img/default.jpg'),
+                    },
                 },
-                product : {},
+                product : {
+                    id : 0,
+                    prod:{}
+                },
                 order: {
                     quantity    : 1,
                     note   : '',
@@ -87,18 +92,19 @@
                 const id = this.$route.params.id
                 await axios
                     .get(`/v1/product/${id}`)
-                    .then(res=>{
+                    .then( res => {
                         this.product = res.data.data ? res.data.data : this.productDefault
-                        let pic = res.data.data ? require('@/assets/img/' + res.data.data.picture) : require('@/assets/img/default.jpg')
+                        let pic = res.data.data ? require('@/assets/img/' + res.data.data.prod.picture) : require('@/assets/img/default.jpg')
+                        console.log(this.product)
                         this.product.picture = pic
                     })
                     .catch(err=>{
                         console.log('Error', err)
                     })
                 await axios
-                    .get(`/v1/product-type/${this.product.type_id}`)
+                    .get(`/v1/product-type/${this.product.prod.type_id}`)
                     .then(res=>{
-                        this.product.type = res.data.data.name ? res.data.data.name : '-'
+                        this.product.type = res.data.data.type.name ? res.data.data.type.name : '-'
                     })
                     .catch(err=>{
                         console.log('Error', err)

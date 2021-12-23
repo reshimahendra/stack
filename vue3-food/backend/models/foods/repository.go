@@ -1,6 +1,11 @@
 package foods
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+	"log"
+
+	"gorm.io/gorm"
+)
 
 // 1. PRODUCT TYPE Repository
 type ProductTypeRepo interface {
@@ -59,14 +64,14 @@ func (r *productTypeRepo) Create(pt ProductType) (ProductType, error) {
 
 // Update PRODUCT TYPE 
 func (r *productTypeRepo) Update(id int, pt ProductType) (ProductType, error) {
-    err := r.db.Where("deleted_at IS NULL AND id=?", id).Updates(&pt).Error
+    err := r.db.Where("id=?", id).Updates(&pt).Error
     return pt, err
 }
 
 // Delete PRODUCT TYPE
 func (r *productTypeRepo) Delete(id int) error {
     var pt ProductType
-    return r.db.Where("deleted_at IS NULL AND id=?", id).Delete(&pt).Error
+    return r.db.Where("id=?", id).Delete(&pt).Error
 }
 
 // First PRODUCT TYPE
@@ -88,7 +93,7 @@ func (r *productTypeRepo) Last() (ProductType, error) {
 // Find By ID PRODUCT TYPE 
 func (r *productTypeRepo) FindByID(id int) (ProductType, error) {
     var pt ProductType
-    err := r.db.Where("deleted_at IS NULL AND id=?", id).First(&pt).Error
+    err := r.db.Where("id=?", id).First(&pt).Error
 
     return pt, err
 }
@@ -96,7 +101,7 @@ func (r *productTypeRepo) FindByID(id int) (ProductType, error) {
 // Get all PRODUCT TYPE
 func (r *productTypeRepo) All() ([]ProductType, error) {
     var prodTypes []ProductType
-    err := r.db.Where("deleted_at IS NULL").Find(&prodTypes).Error
+    err := r.db.Find(&prodTypes).Error
 
     return prodTypes, err
 }
@@ -122,14 +127,15 @@ func (r * productCategoryRepo) Create(pc ProductCategory) (ProductCategory, erro
 
 // Update 'product category'
 func (r *productCategoryRepo) Update(id int, pc ProductCategory) (ProductCategory, error) {
-    err := r.db.Where("deleted_at IS NULL AND id=?", id).Updates(&pc).Error
+    err := r.db.Where("id=?",id).Updates(&pc).Error
+    log.Println(err)
     return pc, err
 }
 
 // Delete 'product category'
 func (r *productCategoryRepo) Delete(id int) error {
     var pc ProductCategory
-    err := r.db.Where("deleted_at IS NULL AND id=?", id).Delete(&pc).Error
+    err := r.db.Where("id=?", id).Delete(&pc).Error
 
     return err
 }
@@ -137,28 +143,28 @@ func (r *productCategoryRepo) Delete(id int) error {
 // First 'product category'
 func (r *productCategoryRepo) First() (ProductCategory, error) {
     var pc ProductCategory
-    err := r.db.Where("deleted_at IS NULL").First(&pc).Error
+    err := r.db.First(&pc).Error
     return pc, err
 }
 
 // Last 'Product category'
 func (r *productCategoryRepo) Last() (ProductCategory, error) {
     var pc ProductCategory
-    err := r.db.Where("deleted_at IS NULL").Last(&pc).Error
+    err := r.db.Last(&pc).Error
     return pc, err
 }
 
 // 'product category' Find By ID 
 func (r *productCategoryRepo) FindByID(id int) (ProductCategory, error) {
     var pc ProductCategory
-    err := r.db.Where("deleted_at IS NULL AND id=?", id).First(&pc).Error
+    err := r.db.Where("id=?", id).First(&pc).Error
     return pc, err
 }
 
 // Get ALL 'product category'
 func (r *productCategoryRepo) All() ([]ProductCategory, error) {
     var pcs []ProductCategory
-    err := r.db.Where("deleted_at IS NULL").Find(&pcs).Error
+    err := r.db.Find(&pcs).Error
     return pcs, err
 }
 
@@ -181,7 +187,8 @@ func (r * productRepo) Create(p Product) (Product, error) {
 
 // Update 'product'
 func (r *productRepo) Update(id int, p Product) (Product, error) {
-    err := r.db.Where("deleted_at IS NULL AND id=?", id).Updates(&p).Error
+    err := r.db.Where("id=?", id).Updates(&p).Error
+    fmt.Println("Repo product update 1:\n", p)
     return p, err
 }
 

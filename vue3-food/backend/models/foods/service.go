@@ -1,11 +1,13 @@
 package foods
 
+import "fmt"
+
 /*
-    PRODUCT TYPE SERVICE 
+   PRODUCT TYPE SERVICE
 */
 type ProductTypeService interface {
-    Create(pt ProductTypeRequest) (ProductType, error)
-    Update(id int, pt ProductTypeRequest) (ProductType, error)
+    Create(pt ProdTypeBase) (ProductType, error)
+    Update(id int, pt ProdTypeBase) (ProductType, error)
     Delete(id int) error
     First() (ProductType, error)
     Last() (ProductType, error)
@@ -21,22 +23,15 @@ func NewProductTypeService(repo ProductTypeRepo) *productTypeService {
     return &productTypeService{repo}
 }
 
-func (s *productTypeService) Create(ptr ProductTypeRequest) (ProductType, error) {
+func (s *productTypeService) Create(ptr ProdTypeBase) (ProductType, error) {
     pt := ProductType{
-        Code:        ptr.Code,
-        Name:        ptr.Name,
-        Description: ptr.Description,
+        ProdType: ptr,
     }
     return s.repo.Create(pt)
 }
 
-func (s *productTypeService) Update(id int, ptr ProductTypeRequest) (ProductType, error) {
-    pt := ProductType{
-        Code:        ptr.Code,
-        Name:        ptr.Name,
-        Description: ptr.Description,
-    }
-    return s.repo.Update(id, pt)
+func (s *productTypeService) Update(id int, ptr ProdTypeBase) (ProductType, error) {
+    return s.repo.Update(id, ProductType{ProdType: ptr})
 }
 
 func (s *productTypeService) Delete(id int) (error) {
@@ -64,8 +59,8 @@ func (s *productTypeService) All() ([]ProductType, error) {
     PRODUCT CATEGORY SERVICE 
 */
 type ProductCategoryService interface {
-    Create(pcr ProductCategoryRequest) (ProductCategory, error)
-    Update(id int, pcr ProductCategoryRequest) (ProductCategory, error)
+    Create(pcr ProdCatBase) (ProductCategory, error)
+    Update(id int, pcr ProdCatBase) (ProductCategory, error)
     Delete(id int) error
     First() (ProductCategory, error)
     Last() (ProductCategory, error)
@@ -81,22 +76,15 @@ func NewProductCategoryService(repo ProductCategoryRepo) *productCategoryService
     return &productCategoryService{repo}
 }
 
-func (s *productCategoryService) Create(pcr ProductCategoryRequest) (ProductCategory, error) {
+func (s *productCategoryService) Create(pcr ProdCatBase) (ProductCategory, error) {
     pc := ProductCategory{
-        Code:        pcr.Code,
-        Name:        pcr.Name,
-        Description: pcr.Description,
+        ProdCat: pcr,
     }
     return s.repo.Create(pc)
 }
 
-func (s *productCategoryService) Update(id int, pcr ProductCategoryRequest) (ProductCategory, error) {
-    pc := ProductCategory{
-        Code:        pcr.Code,
-        Name:        pcr.Name,
-        Description: pcr.Description,
-    }
-    return s.repo.Update(id, pc)
+func (s *productCategoryService) Update(id int, pcr ProdCatBase) (ProductCategory, error) {
+    return s.repo.Update(id, ProductCategory{ProdCat: pcr})
 }
 
 func (s *productCategoryService) Delete(id int) (error) {
@@ -124,8 +112,8 @@ func (s *productCategoryService) All() ([]ProductCategory, error) {
     PRODUCT SERVICE 
 */
 type ProductService interface {
-    Create(pr ProductRequest) (Product, error)
-    Update(id int, pr ProductReqUpdate) (Product, error)
+    Create(pr ProductBase) (Product, error)
+    Update(id int, pr ProductBase) (Product, error)
     Delete(id int) error
     First() (Product, error)
     Last() (Product, error)
@@ -144,32 +132,26 @@ func NewProductService(repo ProductRepo) *productService {
     return &productService{repo}
 }
 
-func (s *productService) Create(pr ProductRequest) (Product, error) {
-    p := Product{
-        Sku: pr.Sku,
-        Name: pr.Name,
-        CategoryID: pr.CategoryID,
-        TypeID: pr.TypeID,
-        Price: pr.Price,
-        IsReady: pr.IsReady,
-        IsAvailable: pr.IsAvailable,
-        Picture: pr.Picture,
+// check is there an empty field
+func fieldEmpty(field ...interface{}) bool {
+    for _,k := range field {
+        if k == nil {
+            return true
+        }
     }
-    return s.repo.Create(p)
+    return false
 }
 
-func (s *productService) Update(id int, pr ProductReqUpdate) (Product, error) {
-    p := Product{
-        Sku: pr.Sku,
-        Name: pr.Name,
-        CategoryID: pr.CategoryID,
-        TypeID: pr.TypeID,
-        Price: pr.Price,
-        IsReady: pr.IsReady,
-        IsAvailable: pr.IsAvailable,
-        Picture: pr.Picture,
-    }
-    return s.repo.Update(id, p)
+func (s *productService) Create(pr ProductBase) (Product, error) {
+    return s.repo.Create(Product{Prod:pr})
+}
+
+func (s *productService) Update(id int, pr ProductBase) (Product, error) {
+    fmt.Println("Service product update 1:\n", pr)
+    prod := Product{Prod:pr}
+    fmt.Println("Service product update 2:\n", prod)
+    prod.ID = uint(id)
+    return s.repo.Update(id, prod)
 }
 
 func (s *productService) Delete(id int) (error) {

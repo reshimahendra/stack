@@ -23,7 +23,7 @@ func NewProductTypeHandler(productTypeService ProductTypeService) *productTypeHa
 
 // create handle 
 func (h *productTypeHandler) CreateProductTypeHandler(c *gin.Context) {
-    var pts ProductTypeRequest
+    var pts ProdTypeBase
 
     err := c.ShouldBindJSON(&pts)
     if err != nil {
@@ -42,6 +42,7 @@ func (h *productTypeHandler) CreateProductTypeHandler(c *gin.Context) {
     }
 
     pt, err := h.productTypeService.Create(pts)
+    fmt.Println(err)
     if err != nil {
         eMsg := "Error occur while creating 'product type' record."
         fmt.Println(eMsg)
@@ -51,15 +52,15 @@ func (h *productTypeHandler) CreateProductTypeHandler(c *gin.Context) {
         return
     }
 
-    ptr := prodTypeToResponse(pt)
+    // show data to user 
     c.JSON(http.StatusOK, gin.H{
-        "data": ptr,
+        "data": pt,
     })
 }
 
 // update handle
 func (h *productTypeHandler) UpdateProductTypeHandler(c *gin.Context) {
-   var ptr ProductTypeRequest
+   var ptr ProdTypeBase
 
    // Check if required record available
    ptID, err := strconv.Atoi(c.Param("id"))
@@ -91,13 +92,11 @@ func (h *productTypeHandler) UpdateProductTypeHandler(c *gin.Context) {
        return
    }
 
-   // Update the record data 
-   pt.ID = ptID
-   ptRes := prodTypeToResponse(pt)
-
+   
    // Show updated data 
+   pt.ID = ptID
    c.JSON(http.StatusOK, gin.H{
-       "data": ptRes,
+       "data": pt,
    })
 }
 
@@ -147,9 +146,8 @@ func (h *productTypeHandler) FirstProductTypeHandler(c *gin.Context) {
     }
 
     // show the data to the client
-    ptRes := prodTypeToResponse(pt)
     c.JSON(http.StatusOK, gin.H{
-        "data": ptRes, 
+        "data": pt, 
     })
 }
 
@@ -165,9 +163,8 @@ func (h *productTypeHandler) LastProductTypeHandler(c *gin.Context) {
     }
 
     // Show data to the client 
-    ptRes := prodTypeToResponse(pt)
     c.JSON(http.StatusOK, gin.H{
-        "data" : ptRes,
+        "data" : pt,
     })
 }
 
@@ -190,15 +187,13 @@ func (h *productTypeHandler) FindByIDProductTypeHandler(c *gin.Context) {
     }
 
     // Show data to client 
-    ptRes := prodTypeToResponse(pt)
     c.JSON(http.StatusOK, gin.H{
-        "data": ptRes,
+        "data": pt,
     })
 }
 
 // Show all data 
 func (h *productTypeHandler) ShowProductTypeHandler(c *gin.Context) {
-    var allPtr []ProductTypeResponse
     // Get all product type data 
     allPt, err := h.productTypeService.All()
     if err != nil {
@@ -208,13 +203,8 @@ func (h *productTypeHandler) ShowProductTypeHandler(c *gin.Context) {
         return
     }
 
-    // Iterate all data to our array of 'product type response' struct before sending to client
-    for _, pt := range allPt {
-        allPtr = append(allPtr, prodTypeToResponse(pt))
-    }
-
     c.JSON(http.StatusOK, gin.H{
-        "data": allPtr,
+        "data": allPt,
     })
 }
 
@@ -232,7 +222,7 @@ func NewProductCategoryHandler(productCategoryService ProductCategoryService) *p
 
 // create handle 
 func (h *productCategoryHandler) CreateProductCategoryHandler(c *gin.Context) {
-    var pcr ProductCategoryRequest
+    var pcr ProdCatBase 
 
     err := c.ShouldBindJSON(&pcr)
     if err != nil {
@@ -260,15 +250,14 @@ func (h *productCategoryHandler) CreateProductCategoryHandler(c *gin.Context) {
         return
     }
 
-    pcRes := prodCategoryToResponse(pc)
     c.JSON(http.StatusOK, gin.H{
-        "data": pcRes,
+        "data": pc,
     })
 }
 
 // update handle
 func (h *productCategoryHandler) UpdateProductCategoryHandler(c *gin.Context) {
-   var pcr ProductCategoryRequest
+   var pcr ProdCatBase 
 
    // Check if required record available
    pcID, err := strconv.Atoi(c.Param("id"))
@@ -300,13 +289,10 @@ func (h *productCategoryHandler) UpdateProductCategoryHandler(c *gin.Context) {
        return
    }
 
-   // Update the record data 
-   pc.ID = pcID
-   pcRes := prodCategoryToResponse(pc)
-
    // Show updated data 
+   pc.ID = pcID
    c.JSON(http.StatusOK, gin.H{
-       "data": pcRes,
+       "data": pc,
    })
 }
 
@@ -355,10 +341,8 @@ func (h *productCategoryHandler) FirstProductCategoryHandler(c *gin.Context) {
         return
     }
 
-    // show the data to the client
-    pcRes := prodCategoryToResponse(pc)
     c.JSON(http.StatusOK, gin.H{
-        "data": pcRes, 
+        "data": pc, 
     })
 }
 
@@ -374,9 +358,8 @@ func (h *productCategoryHandler) LastProductCategoryHandler(c *gin.Context) {
     }
 
     // Show data to the client 
-    pcRes := prodCategoryToResponse(pc)
     c.JSON(http.StatusOK, gin.H{
-        "data" : pcRes,
+        "data" : pc,
     })
 }
 
@@ -399,16 +382,13 @@ func (h *productCategoryHandler) FindByIDProductCategoryHandler(c *gin.Context) 
     }
 
     // Show data to client 
-    pcRes := prodCategoryToResponse(pc)
     c.JSON(http.StatusOK, gin.H{
-        "data": pcRes,
+        "data": pc,
     })
 }
 
 // Show all data 
 func (h *productCategoryHandler) ShowProductCategoryHandler(c *gin.Context) {
-    var allPcr []ProductCategoryResponse
-
     // Get all product category data 
     allPc, err := h.productCategoryService.All()
     if err != nil {
@@ -418,13 +398,8 @@ func (h *productCategoryHandler) ShowProductCategoryHandler(c *gin.Context) {
         return
     }
 
-    // Iterate all data to our array of 'product type response' struct before sending to client
-    for _, pc := range allPc {
-        allPcr = append(allPcr, prodCategoryToResponse(pc))
-    }
-
     c.JSON(http.StatusOK, gin.H{
-        "data": allPcr,
+        "data": allPc,
     })
 }
 
@@ -442,9 +417,10 @@ func NewProductHandler(productService ProductService) *productHandler{
 
 // create handle 
 func (h *productHandler) CreateProductHandler(c *gin.Context) {
-    var ProdReq ProductRequest
+    var ProdReq ProductBase
 
     err := c.ShouldBindJSON(&ProdReq)
+    fmt.Println("Product handler create 1:\n", ProdReq)
     if err != nil {
         log.Println(err)
         msg := []string{}
@@ -461,6 +437,7 @@ func (h *productHandler) CreateProductHandler(c *gin.Context) {
     }
 
     Prod, err := h.productService.Create(ProdReq)
+    fmt.Println("Product handler create 2:\n", Prod)
     if err != nil {
         eMsg := "Error occur while creating 'product' record."
         fmt.Println(eMsg)
@@ -470,28 +447,20 @@ func (h *productHandler) CreateProductHandler(c *gin.Context) {
         return
     }
 
-    pcRes := productToResponse(Prod)
     c.JSON(http.StatusOK, gin.H{
-        "data": pcRes,
+        "data": Prod,
     })
 }
 
 // update handle
 func (h *productHandler) UpdateProductHandler(c *gin.Context) {
-   var prodReq ProductReqUpdate
+   var prodReq ProductBase
 
-   // Check if required record available
-   prodID, err := strconv.Atoi(c.Param("id"))
-   fmt.Println(err)
-   if err != nil || prodID < 0 {
-       c.JSON(http.StatusBadRequest, gin.H{
-           "error": "Error occur while checking the required params!",
-       })
-       return
-   }
+   prodID, _ := strconv.Atoi(c.Param("id"))
 
    // Validate the input request 
-   err = c.ShouldBindJSON(&prodReq)
+   err := c.ShouldBindJSON(&prodReq)
+   fmt.Println("handler update 1:\n",prodReq)
    if err != nil {
        msg := []string{}
        for _, e := range err.(validator.ValidationErrors) {
@@ -504,6 +473,7 @@ func (h *productHandler) UpdateProductHandler(c *gin.Context) {
 
    // Update the data based on the 'ProductID/ ProdID' found on 'ProductRequest/ ProdReq' struct 
    prod, err := h.productService.Update(prodID, prodReq)
+   fmt.Println("handler update 2:\n",prod)
    if err != nil {
        c.JSON(http.StatusBadRequest, gin.H{
            "error": "Update operation aborted. Something wrong with the data.",
@@ -512,12 +482,11 @@ func (h *productHandler) UpdateProductHandler(c *gin.Context) {
    }
 
    // Update the record data 
-   prod.ID = prodID
-   prodRes := productToResponse(prod)
+   prod.ID = uint(prodID)
 
    // Show updated data 
    c.JSON(http.StatusOK, gin.H{
-       "data": prodRes,
+       "data": prod,
    })
 }
 
@@ -567,9 +536,8 @@ func (h *productHandler) FirstProductHandler(c *gin.Context) {
     }
 
     // show the data to the client
-    ProdRes := productToResponse(Prod)
     c.JSON(http.StatusOK, gin.H{
-        "data": ProdRes, 
+        "data": Prod, 
     })
 }
 
@@ -585,9 +553,8 @@ func (h *productHandler) LastProductHandler(c *gin.Context) {
     }
 
     // Show data to the client 
-    ProdRes := productToResponse(Prod)
     c.JSON(http.StatusOK, gin.H{
-        "data" : ProdRes,
+        "data" : Prod,
     })
 }
 
@@ -610,16 +577,13 @@ func (h *productHandler) FindByIDProductHandler(c *gin.Context) {
     }
 
     // Show data to client 
-    ProdRes := productToResponse(Prod)
     c.JSON(http.StatusOK, gin.H{
-        "data": ProdRes,
+        "data": Prod,
     })
 }
 
 // Show all data 
 func (h *productHandler) ShowProductHandler(c *gin.Context) {
-    var allPS []ProductResponse
-
     // Get all product category data 
     allProd, err := h.productService.All()
     if err != nil {
@@ -629,20 +593,13 @@ func (h *productHandler) ShowProductHandler(c *gin.Context) {
         return
     }
 
-    // Iterate all data to our array of 'product type response' struct before sending to client
-    for _, Prod := range allProd {
-        allPS = append(allPS, productToResponse(Prod))
-    }
-
     c.JSON(http.StatusOK, gin.H{
-        "data": allPS,
+        "data": allProd,
     })
 }
 
 // Show limited list data 
 func (h *productHandler) LimitProductHandler(c *gin.Context) {
-    var allPS []ProductResponse
-
     // Get all product data 
     maxRec, _ := strconv.Atoi(c.Param("limit"))
     allProd, err := h.productService.Limit(maxRec)
@@ -653,20 +610,13 @@ func (h *productHandler) LimitProductHandler(c *gin.Context) {
         return
     }
 
-    // Iterate all data to our array of 'product type response' struct before sending to client
-    for _, Prod := range allProd {
-        allPS = append(allPS, productToResponse(Prod))
-    }
-
     c.JSON(http.StatusOK, gin.H{
-        "data": allPS,
+        "data": allProd,
     })
 }
 
 // Show offseted data 
 func (h *productHandler) OffsetProductHandler(c *gin.Context) {
-    var allPS []ProductResponse
-
     // Get all product Data 
     offset, _ := strconv.Atoi(c.Param("offset"))
     allProd, err := h.productService.Offset(offset)
@@ -677,20 +627,13 @@ func (h *productHandler) OffsetProductHandler(c *gin.Context) {
         return
     }
 
-    // Iterate all data to our array of 'product type response' struct before sending to client
-    for _, Prod := range allProd {
-        allPS = append(allPS, productToResponse(Prod))
-    }
-
     c.JSON(http.StatusOK, gin.H{
-        "data": allPS,
+        "data": allProd,
     })
 }
 
 // Find Name 
 func (h *productHandler) FindNameProductHandler(c *gin.Context) {
-    var fp []ProductResponse
-
     // Looking for data with 'LIKE' clausal on 'name' field 
     filterProd, err := h.productService.FindName(c.Param("name"))
     if err != nil {
@@ -700,12 +643,8 @@ func (h *productHandler) FindNameProductHandler(c *gin.Context) {
         return
     }
 
-    for _, p := range filterProd {
-        fp = append(fp, productToResponse(p))
-    }
-
     // Show data to client 
     c.JSON(http.StatusOK, gin.H{
-        "data": fp,
+        "data": filterProd,
     })
 }

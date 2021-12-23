@@ -12,19 +12,20 @@ import (
 )
 
 func main()  {
-    db, err := gorm.Open(sqlite.Open("resto.db"), &gorm.Config{})
+    db, err := gorm.Open(sqlite.Open("rest.db"), &gorm.Config{})
     if err != nil {
         panic("Fail to connect to Database.")
     }
     // automigrate models 
     db.AutoMigrate(
+        &foods.Product{},
         &foods.ProductType{},
         &foods.ProductCategory{},
-        &foods.Product{},
         &cart.Cart{},
-        &cart.OrderList{},
+        &cart.CartItem{},
     )
 
+    // db.Migrator().CreateTable(&foods.ProductType{})
 
     // product Type
     prodTypeRepo    := foods.NewProductTypeRepo(db)
